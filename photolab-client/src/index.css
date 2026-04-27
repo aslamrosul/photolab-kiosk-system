@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Base Photolab Kiosk Variables */
+@theme {
+  --color-indigo-500: #6366f1;
+  --color-indigo-600: #4f46e5;
+  --color-violet-500: #8b5cf6;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overscroll-behavior-y: none;
+  user-select: none; /* No selecting text by accident on public kiosk */
+  -webkit-user-drag: none; /* No dragging items */
+  background-color: #0f172a; /* Dark background default for idle screen */
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow: hidden; /* Prevent scrolling entirely */
+}
+
+/* Custom UI animations for kiosk */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-kiosk-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==================================================
+   Layout Modes: Landscape vs Portrait
+   ================================================== */
+   
+/* Landscape is default (16:9) */
+.layout-landscape {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Portrait modifications (9:16) */
+.layout-portrait {
+  width: 100vw;
+  height: 100vh;
+  /* Additional scoped rules for portrait orientations can go here.
+     Generally, tailwind flex-col works best, but this class is available
+     to override flex directions on deep child components globally */
+}
+
+.layout-portrait .flex-row-portrait-fix {
+    flex-direction: column !important;
+}
+
+.layout-portrait .h-screen-landscape-fix {
+    height: auto !important;
+    min-height: 100vh;
+}
+
+.layout-portrait .w-1-2-portrait-fix {
+    width: 100% !important;
+}
+
+/* Adjustments for FinalScreen split-view in portrait */
+.layout-portrait .final-split-container {
+    flex-direction: column !important;
+}
+
+.layout-portrait .final-split-left,
+.layout-portrait .final-split-right {
+    width: 100% !important;
+    height: 50% !important;
+    justify-content: center !important;
+}
